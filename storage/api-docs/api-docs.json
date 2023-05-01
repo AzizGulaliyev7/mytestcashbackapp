@@ -1,0 +1,43 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "My First API",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/v1/book": {
+            "get": {
+                "tags": [
+                    "book"
+                ],
+                "summary": "Get a list of books",
+                "description": "",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get all users",
+                "operationId": "getAllUsers",
+                "responses": {
+                    "200": {
+                        "description": "A list of users"
+                    }
+                }
+            }
+        }
+    }
+}
