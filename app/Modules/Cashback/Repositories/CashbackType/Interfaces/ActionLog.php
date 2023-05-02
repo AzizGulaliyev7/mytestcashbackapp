@@ -7,6 +7,7 @@ use App\Modules\Cashback\Models\BalanceAccount;
 use App\Modules\Cashback\Models\CashbackAction;
 use App\Modules\Cashback\Models\CashbackActionLog;
 use App\Modules\Cashback\Models\Transaction;
+use Illuminate\Http\JsonResponse;
 
 abstract class ActionLog
 {
@@ -47,7 +48,7 @@ abstract class ActionLog
         return $this;
     }
 
-    public function makeCashback($cashbackActionDTO) {
+    public function makeCashback($cashbackActionDTO) : JsonResponse {
         if ($this->isSuccess) {
             $cashbackAction = $cashbackActionDTO->getCashbackAction();
             $cashbackActionAmounts = CashbackAction::find($cashbackAction->id)

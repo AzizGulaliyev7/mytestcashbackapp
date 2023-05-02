@@ -81,7 +81,7 @@ class ResponseServiceProvider extends ServiceProvider
             'message' => $message,
         ];
 
-        if (count($errors)) {
+        if (!empty($errors)) {
             $response['errors'] = $errors;
         }
 

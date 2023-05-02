@@ -32,11 +32,4 @@ class CashbackRequest extends FormRequest
             'attributes'            => 'required|array'
         ];
     }
-
-    protected function failedValidation(Validator $validator)
-    {
-        $errors = (new ValidationException($validator))->errors();
-
-        return response()->validationError('Validation Failure.', $errors);
-    }
 }

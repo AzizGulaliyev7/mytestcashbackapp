@@ -10,10 +10,11 @@ use App\Modules\Cashback\Models\Transaction;
 use App\Modules\Cashback\Repositories\CashbackType\Interfaces\ActionLog;
 use App\Modules\Cashback\Repositories\CashbackType\Interfaces\CashbackManageableInterface;
 use App\Modules\Cashback\Repositories\CashbackType\Interfaces\MakeCashbackInterface;
+use Illuminate\Http\JsonResponse;
 
 class CashbackTypeGroupRepository extends ActionLog implements MakeCashbackInterface, CashbackManageableInterface {
 
-    public function manageCashback(CashbackActionDTO $cashbackActionDTO) {
+    public function manageCashback(CashbackActionDTO $cashbackActionDTO) : JsonResponse {
         return $this->doNotCashbackIfActionAlreadyDone($cashbackActionDTO)
             ->checkIfAllAttributesArePassed($cashbackActionDTO)
             ->createCashbackLog($cashbackActionDTO)
@@ -33,7 +34,7 @@ class CashbackTypeGroupRepository extends ActionLog implements MakeCashbackInter
         return $this;
     }
 
-    public function makeGroupCashback(CashbackActionDTO $cashbackActionDTO) {
+    public function makeGroupCashback(CashbackActionDTO $cashbackActionDTO) : JsonResponse {
         if ($this->isSuccess) {
             $cashbackAction = $cashbackActionDTO->getCashbackAction();
 
