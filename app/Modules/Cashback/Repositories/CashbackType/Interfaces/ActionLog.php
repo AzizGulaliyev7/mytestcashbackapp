@@ -11,19 +11,16 @@ use App\Modules\Cashback\Models\Transaction;
 abstract class ActionLog
 {
     protected bool $isSuccess;
-    protected string $responseMessage;
-    protected string $errorMessage;
+    protected  $response;
 
     function __construct() {
         $this->isSuccess = true;
-        $this->responseMessage = '';
-        $this->errorMessage = '';
     }
 
     public function doNotCashbackIfActionAlreadyDone(CashbackActionDTO $cashbackActionDTO) {
         if ($cashbackActionDTO->checkIfActionIsDoneBefore()) {
             $this->isSuccess = false;
-            $this->errorMessage = 'This cashback is already done';
+            $this->response = response()->conflict('This cashback is already done');
         }
         return $this;
     }
@@ -32,7 +29,7 @@ abstract class ActionLog
         if ($this->isSuccess) {
             $this->isSuccess = ($cashbackActionDTO->getCashbackAction())->checkAttributes($cashbackActionDTO->attributes);
             if (!$this->isSuccess) {
-                $this->errorMessage = 'Attributes are not passeded';
+                $this->response = response()->badRequest('Attributes are not passeded');
             }
         }
         return $this;
@@ -50,7 +47,7 @@ abstract class ActionLog
         return $this;
     }
 
-    public function makeCashback($cashbackActionDTO)  : array {
+    public function makeCashback($cashbackActionDTO) {
         if ($this->isSuccess) {
             $cashbackAction = $cashbackActionDTO->getCashbackAction();
             $cashbackActionAmounts = CashbackAction::find($cashbackAction->id)
@@ -68,22 +65,9 @@ abstract class ActionLog
             $balanceAccount->balance += $transaction->cashback_amount;
             $balanceAccount->update();
 
-            $this->responseMessage = "Successfully created cashback";
+            $this->response = response()->created("Cashback successfully created");
         }
 
-        return [
-            'status_code'   =>  ($this->isSuccess ? 200 : 400),
-            'json_response'   =>  [
-                'result' => [
-                    'success'   => $this->isSuccess,
-                    'message'   => $this->responseMessage,
-                    'date'      => []
-                ],
-                'error' => [
-                    'message' => $this->errorMessage,
-                    'code'    => ($this->isSuccess ? 200 : 400),
-                ]
-            ]
-        ];
+        return $this->response;
     }
 }

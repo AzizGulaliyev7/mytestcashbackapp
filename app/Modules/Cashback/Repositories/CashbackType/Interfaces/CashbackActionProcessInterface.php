@@ -6,5 +6,5 @@ use Illuminate\Http\Request;
 
 interface CashbackActionProcessInterface
 {
-    public function processCashbackAction(Request $request) : array;
+    public function processCashbackAction(Request $request);
 }

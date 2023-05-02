@@ -180,6 +180,7 @@ return [
          * Custom Service Providers
          */
         App\Modules\Cashback\Providers\CashbackServiceProvider::class,
+        App\Modules\Cashback\Providers\ResponseServiceProvider::class,
     ],
 
     /*

@@ -8,7 +8,7 @@ use App\Modules\Cashback\Repositories\CashbackType\Interfaces\CashbackManageable
 
 class CashbackTypeSingleRepository extends ActionLog implements CashbackManageableInterface {
 
-    public function manageCashback(CashbackActionDTO $cashbackActionDTO)  : array {
+    public function manageCashback(CashbackActionDTO $cashbackActionDTO) {
         return $this->doNotCashbackIfActionAlreadyDone($cashbackActionDTO)
             ->checkIfAllAttributesArePassed($cashbackActionDTO)
             ->createCashbackLog($cashbackActionDTO)

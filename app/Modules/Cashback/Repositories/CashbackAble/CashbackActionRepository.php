@@ -14,7 +14,7 @@ class CashbackActionRepository implements CashbackAbleRepositoryInterface
         $this->cashbackActionProcess = $cashbackActionProcess;
     }
 
-    public function cashback(Request $request) : array
+    public function cashback(Request $request)
     {
         return $this->cashbackActionProcess->processCashbackAction($request);
     }

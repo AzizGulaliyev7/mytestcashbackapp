@@ -6,5 +6,5 @@ use App\Modules\Cashback\DTO\CashbackActionDTO;
 
 interface CashbackManageableInterface
 {
-    public function manageCashback(CashbackActionDTO $cashbackActionDTO) : array;
+    public function manageCashback(CashbackActionDTO $cashbackActionDTO);
 }

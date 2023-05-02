@@ -2,7 +2,6 @@
 
 namespace App\Modules\Cashback\Requests;
 
-use App\Traits\ResponseAble;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
@@ -10,7 +9,6 @@ use function App\Modules\Requests\__;
 
 class CashbackRequest extends FormRequest
 {
-    use ResponseAble;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -39,11 +37,6 @@ class CashbackRequest extends FormRequest
     {
         $errors = (new ValidationException($validator))->errors();
 
-        return $this->sendError(
-            $errors,
-            __('messages.validation_error'),
-            422
-        );
-
+        return response()->validationError('Validation Failure.', $errors);
     }
 }

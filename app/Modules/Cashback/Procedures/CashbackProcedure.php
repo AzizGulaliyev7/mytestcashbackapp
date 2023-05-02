@@ -7,6 +7,7 @@ namespace App\Modules\Cashback\Procedures;
 use App\Modules\Cashback\Repositories\CashbackAble\Interfaces\CashbackAbleRepositoryInterface;
 use App\Modules\Cashback\Requests\CashbackRequest;
 use Illuminate\Http\Request;
+use Modules\Balance\DTO\CreateBalanceDTO;
 use Sajya\Server\Procedure;
 
 class CashbackProcedure extends Procedure
@@ -33,9 +34,12 @@ class CashbackProcedure extends Procedure
      */
     public function cashback(CashbackRequest $request)
     {
-        $response = $this->cashbackAbleRepository->cashback($request);
-
-        return response()->json($response['json_response'], $response['status_code'])->setStatusCode($response['status_code']);
+        try {
+            $response = $this->cashbackAbleRepository->cashback($request);
+            return $response;
+        } catch (\Exception $e) {
+            return response()->internalServerError('Internal Server Error.', $e->getMessage());
+        }
     }
 }
 
